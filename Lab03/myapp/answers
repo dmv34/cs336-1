@@ -1,0 +1,13 @@
+Compare and contrast the purposes of Node.js and of Express.js:
+
+Explain the purpose of the packages.json file:
+
+Explain the sense in which these files are “static”:
+-It is that they dont change in the .js code itself. It is unchanging.
+
+Determine whether the server continues to serve up the hello-world message and explain why this is the case:
+
+
+
+
+
