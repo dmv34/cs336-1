@@ -35,17 +35,17 @@ app.get('/people', function (req, res) {
 });
 
 //shows the last name and first name of the person with the associated id.
-app.get('/person/id', function (req, res) {
-if(id ==null) {
+app.get('/person/:id', function (req, res) {
+if(id == null) {
   res.sendStatus(404);
 } else {
-    res.send(people[req.params.id].lname + ', ' + people[req.params.id].fname);
+    res.json(people[req.params.id].lname + ', ' + people[req.params.id].fname);
 };
 });
 
 //gets anniversary date
 //it uses the function the professor gave us in lab02
-app.get('/person/id/years', function (req, res) {
+app.get('/person/:id/:years', function (req, res) {
   if(hiredate == null) {
     res.sendStatus(404);
   } else {
