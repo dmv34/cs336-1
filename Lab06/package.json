@@ -1,0 +1,14 @@
+{
+    "name": "Lab06",
+    "version": "1.0.0",
+    "description": "For cs336",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "Loganvp",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.14.0"
+    }
+}
