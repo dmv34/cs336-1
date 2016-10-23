@@ -2,23 +2,29 @@
 * Author: LoganVP
 * For exercise 7.2
 */
-$( "a" ).addClass( "test" );
 
-//sends alert to browser
+$( document ).ready(function() {
+  $("#getdata").click(function( event ) {
 
-//Makes link dissapear
-$( "a" ).click(function( event ) {
-  event.preventDefault();
-  $( this ).hide( "slow" );
-
-  //Adds a paragraph to the dom.
-  $( "body" ).html( "<p>no data yet...</p>")
+    // Using the core $.ajax() method
+    $.ajax({
+      // The URL for the request
+      url: "/fetch",
+      // The data to send (will be converted to a query string)
+      data: {
+        id: "Lab07"
+      },
+      type: "GET",
+      dataType: "json"
+      })
+      .done(function( json ) {
+        $("#getdata").next("div").html("<p>" + json.message + "</p>");
+      })
+      .fail(function( xhr, status, errorThrown ) {
+        alert( "Sorry, there was a problem!" );
+      })
+    .always(function( xhr, status ) {
+      alert( "The request is complete!" );
+    }
+  });
 });
-
-$( function() {
-    $( ".widget input[type=submit], .widget a, .widget button" ).button();
-    $( "button, input, a" ).click( function( event ) {
-      event.preventDefault();
-        $( "body" ).html( "<p>no data yet...</p>")
-    } );
-  } );

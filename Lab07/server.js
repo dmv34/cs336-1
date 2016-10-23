@@ -22,6 +22,9 @@ app.get("/", function(req, res) {
     res.send("Go to /lab07.html");
 });
 
+app.get("/fetch", function(req, res) {
+  res.send( {"message" : "Hello, " + req.query.name + "!"} );
+});
 
 app.listen(PORT, HOST, () => {
     console.log("listening on " + HOST + ":" + PORT + "...");
