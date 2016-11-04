@@ -1,8 +1,15 @@
 {
-  "name": "react-tutorial",
+  "name": "server",
   "version": "0.0.0",
+  "private": true,
+  "license": "see LICENSE file",
   "description": "Code from the React tutorial.",
   "main": "server.js",
+  "scripts": {
+    "build": "webpack --progress",
+    "dev": "node server.js & webpack-dev-server --progress",
+    "start": "node server.js"
+  },
   "dependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
@@ -21,10 +28,8 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "devDependencies": {
+    "webpack-dev-server": "^1.16.2"
   },
   "repository": {
     "type": "git",
