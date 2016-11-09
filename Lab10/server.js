@@ -15,8 +15,14 @@
  var express = require('express');
  var bodyParser = require('body-parser');
  var app = express();
+ var MongoClient = require('mongodb').MongoClient
 
  var COMMENTS_FILE = path.join(__dirname, 'comments.json');
+ var db;
+ //change the username for the db
+ var USERNAME = 'cs336';
+ //change the password for the db
+ var PASSWORD = 'password';
 
  app.set('port', (process.env.PORT || 3000));
 
@@ -36,41 +42,33 @@
  });
 
  app.get('/api/comments', function(req, res) {
-     fs.readFile(COMMENTS_FILE, function(err, data) {
-         if (err) {
-             console.error(err);
-             process.exit(1);
-         }
-         res.json(JSON.parse(data));
-     });
+      db.collection("comments").find({}).toArray(function(err, docs) {
+        assert.equal(err, null);
+        res.json(docs);
+      });
  });
 
  app.post('/api/comments', function(req, res) {
-     fs.readFile(COMMENTS_FILE, function(err, data) {
-         if (err) {
-             console.error(err);
-             process.exit(1);
-         }
-         var comments = JSON.parse(data);
-         // NOTE: In a real implementation, we would likely rely on a database or
-         // some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
-         // treat Date.now() as unique-enough for our purposes.
-         var newComment = {
-             id: Date.now(),
-             author: req.body.author,
-             text: req.body.text,
-         };
-         comments.push(newComment);
-         fs.writeFile(COMMENTS_FILE, JSON.stringify(comments, null, 4), function(err) {
-             if (err) {
-                 console.error(err);
-                 process.exit(1);
-             }
-             res.json(comments);
-         });
-     });
+   var newComment = {
+      id: Date.now(),
+      author: req.body.author,
+      text: req.body.text,
+    };
+
+    db.collection("comments").insertOne(newComment, function(err, result) {
+      assert.equal(err, null);
+      var newId = result.insertedId;
+      db.collection("bugs").find({_id: newId}).next(function(err, doc) {
+          res.json(doc);
+      });
+    });
  });
 
+ MongoClient.connect('mongodb://'+USERNAME+':'+PASSWORD+'@ds023593.mlab.com:23593/cs336', function (err, db) {
+   if (err) throw err
+
+   db = dbConnection;
+ })
 
  app.listen(app.get('port'), function() {
      console.log('Server started: http://localhost:' + app.get('port') + '/');
