@@ -15,9 +15,10 @@
  var express = require('express');
  var bodyParser = require('body-parser');
  var app = express();
- var MongoClient = require('mongodb').MongoClient;
-
  var COMMENTS_FILE = path.join(__dirname, 'comments.json');
+
+ //database variables
+ var MongoClient = require('mongodb').MongoClient;
  var dbConnection;
  //change the username for the db
  var USERNAME = 'cs336';
@@ -38,11 +39,7 @@
 
  // Additional middleware which will set headers that we need on each request.
  app.use(function(req, res, next) {
-     // Set permissive CORS header - this allows this server to be used only as
-     // an API server in conjunction with something like webpack-dev-server.
      res.setHeader('Access-Control-Allow-Origin', '*');
-
-     // Disable caching so we'll always get the latest comments.
      res.setHeader('Cache-Control', 'no-cache');
      next();
  });
@@ -60,7 +57,6 @@
       author: req.body.author,
       text: req.body.text,
     };
-
     //add comment to the database.
     dbConnection.collection('comments').insert(newComment);
  });
