@@ -26,7 +26,7 @@ function Person(id, firstName, lastName, hireDate) {
 
 //root route that gives hello world
 app.get('/', function (req, res) {
-  res.send('<a href="newPerson.html">New Person</a> <br> <a href="getPerson.html">Get Person</a>');
+  res.send('<a href="newPerson.html">New Person</a> <br> <a href="getPerson.html">Get Person</a> <br> <p>Or use the paths /add or /find</p>');
 });
 
 //returns the list of people if /people is called
@@ -108,12 +108,12 @@ function getTime(dateString) {
 }
 
 //opens the webpage to add a person
-app.post('/add', function(req, res) {
+app.get('/add', function(req, res) {
   res.sendFile(__dirname+'/public/newPerson.html');
 });
 
 //opens the webpage to find a person
-app.post('/find', function(req, res) {
+app.get('/find', function(req, res) {
   res.sendFile(__dirname+'/public/getPerson.html');
 });
 
