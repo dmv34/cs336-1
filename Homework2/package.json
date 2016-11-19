@@ -2,9 +2,9 @@
   "name": "Homework2",
   "version": "1.0.0",
   "description": "This is for Homework2 in cs336",
-  "main": "server.js",
+  "main": "server1.js"  ,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server1.js"
   },
   "author": "@LoganVP",
   "license": "ISC"

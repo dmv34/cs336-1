@@ -4,109 +4,95 @@
 */
 var express = require('express');
 var app = express();
-var port = 3000;
 var bodyParser = require('body-parser');
+var port = 3000;
+var idCounter = 5;
 
 //based on things from this page: http://expressjs.com/en/api.html
-var multer = require('multer'); // v1.0.5
-var upload = multer(); // for parsing multipart/form-data
+// var multer = require('multer'); // v1.0.5
+// var upload = multer(); // for parsing multipart/form-data
 app.use(bodyParser.json()); // for parsing application/json
-//app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use('/static', express.static(__dirname+'/public'));
+app.use(express.static('public'));
 
-var idCounter = 4;
-
-
-//Person class
-function Person (id, firstName, lastName, hireDate) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.hireDate = hireDate;
+//this is the person objects
+function Person(id, firstName, lastName, hireDate) {
+	this.id = id;
+  this.firstName = firstName;
+	this.lastName = lastName;
+	this.hireDate = hireDate;
 }
 
-//makes people
-var list = [];
-var n1 = new Person(1, "Logan", "VanProyen", "06/12/1994");
-var n2 = new Person(2, "Barack", "Obama", "01/20/2009");
-var n3 = new Person(3, "Michael", "LeRoy", "06/11/2012");
-var n4 = new Person(4, "Calvin", "College", "10/25/2016");
-
-list.push(n1);
-list.push(n2);
-list.push(n3);
-list.push(n4);
-
-
+//root route that gives hello world
+app.get('/', function (req, res) {
+  res.send('<a href="newPerson.html">New Person</a> <br> <a href="getPerson.html">Get Person</a>');
+});
 
 //returns the list of people if /people is called
 app.get('/people', function (req, res) {
-  res.json(list);
-});
-
-//gets the specific id of a person
-app.get('/person/:id', function (req, res) {
-    if (req.params.id-1 in list) {
-      res.json(list[req.params.id-1]);
-    } else {
-      res.sendStatus(404);
-    }
-});
-
-//opens the webpage to add a person
-app.get('/add/', function(req, res) {
-  res.sendFile(__dirname+'/public/newPerson.html');
-});
-
-//opens the webpage to find a person
-app.get('/find/', function(req, res) {
-  res.sendFile(__dirname+'/public/getPerson.html');
+  res.json(peopleList);
 });
 
 //gets the body from the form that posted the info
 app.post('/person/', function(req, res) {
+  //adds to the counter to increment ids
   var setID = idCounter++;
-  var nPerson = new Person(setID, req.body.firstname, req.body.lastName, req.body.years);
-  list.push(nPerson);
-  res.json(nPerson);
+  var newPerson = new Person(setID, req.body.firstName, req.body.lastName, req.body.hireDate);
+  peopleList.push(newPerson);
+  res.json(peopleList);
+});
+
+//gets the specific id of a person
+app.get('/person/:id', function (req, res) {
+  for (var i = 0; i < peopleList.length; i++) {
+    if (peopleList[i].id == req.params.id) {
+      res.json(peopleList[i]);
+    }
+  }
+  res.sendStatus(404);
 });
 
 //puts a user by the specified id
 app.put('/person/:id', function(req, res) {
-  if (req.params.id-1 in list) {
-    put.Person(req.params.id-1, req.body.firstname, req.body.lastName, req.body.years);
-  } else {
-    res.sendStatus(404);
-  }
-}
+  for (var i = 0; i < peopleList.length; i++) {
+    if (peopleList[i].id == req.params.id) {
+        peopleList[i].firstName = req.body.firstName;
+        peopleList[i].lastName  = req.body.lastName;
+        peopleList[i].hireDate  = req.body.hireDate;
+    }
+	}
+  res.sendStatus(404);
+});
 
 //deletes a user by id
 app.delete('/person/:id', function(req, res) {
-  if (req.params.id-1 in list) {
-    delete.Person(req.params.id-1]);
-  } else {
-    res.sendStatus(404);
-  }
-}
+  for (var i = 0; i < peopleList.length; i++) {
+    if (peopleList[i].id == req.params.id) {
+        delete peopleObjects[i];
+    }
+	}
+  res.sendStatus(404);
+});
 
 //gets the lastName and firstName of the named person
 app.get('/person/:id/name', function (req, res) {
-    if (req.params.id-1 in list) {
-      res.json({"First Name": list[req.params.id-1].firstName,
-                "Last Name" : list[req.params.id-1].lastName});
-    } else {
-      res.sendStatus(404);
+  for (var i = 0; i < peopleList.length; i++) {
+    if (peopleList[i].id == req.params.id) {
+        res.json(peopleList[i].firstName + " " + peopleList[i].lastName);
     }
+	}
+  res.sendStatus(404);
 });
 
 //shows the years
 app.get('/person/:id/years', function (req, res) {
-    if (req.params.id-1 in list) {
-      res.json({ "Anniversary" : getTime(list[req.params.id-1].hireDate)});
-    } else {
-      res.sendStatus(404);
+  for (var i = 0; i < peopleList.length; i++) {
+    if (peopleList[i].id == req.params.id) {
+      res.json({ "Anniversary" : getTime(peopleList[i].hireDate)});
     }
+  }
+  res.sendStatus(404);
 });
 
 //age function
@@ -121,9 +107,27 @@ function getTime(dateString) {
     return years;
 }
 
+//opens the webpage to add a person
+app.post('/add', function(req, res) {
+  res.sendFile(__dirname+'/public/newPerson.html');
+});
+
+//opens the webpage to find a person
+app.post('/find', function(req, res) {
+  res.sendFile(__dirname+'/public/getPerson.html');
+});
+
+
 //console log to tell what port it is listening on
 app.listen(port, function () {
   console.log('Listening on port ' + port);
 });
 
-//https://github.com/CRRDerek/cs336/blob/master/homework02/index.js
+//These add default users to the person object
+var pOne    = new Person(1, "Logan"   , "VanProyen" , "06/12/1994");
+var pTwo    = new Person(2, "Barack"  , "Obama"     , "01/20/2009");
+var pThree  = new Person(3, "Michael" , "LeRoy"     , "03/12/2013");
+var pFour   = new Person(4, "Calvin"  , "College"   , "11/01/2016");
+
+//add people to the array
+var peopleList = [pOne, pTwo, pThree, pFour];
