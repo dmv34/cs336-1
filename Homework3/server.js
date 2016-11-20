@@ -44,20 +44,6 @@ var PASSWORD = 'PASSWORD';
      });
  });
 
-
-
-
-
-
-
-//this is the person objects
-function Person(id, firstName, lastName, hireDate) {
-	this.id = id;
-  this.firstName = firstName;
-	this.lastName = lastName;
-	this.hireDate = hireDate;
-}
-
 //returns the list of people if /people is called
 app.get('/api/people', function (req, res) {
 	db.collection("people").find({}).toArray(function(err, docs) {
@@ -96,11 +82,6 @@ app.get('/person/:id', function (req, res) {
         if (err) throw err;
         res.json(docs);
      });
-});
-
-//puts a user by the specified id
-app.put('/person/:id', function(req, res) {
-
 });
 
 //deletes a user by id
