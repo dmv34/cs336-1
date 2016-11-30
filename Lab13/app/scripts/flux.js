@@ -134,7 +134,7 @@ function commentsApp(state, action) {
         return state;
     case 'DELETE_COMMENT':
         Reducers.deleteComment(action);
-        return state.
+        return state;
 
     default:
     return state;
