@@ -29,9 +29,6 @@ module.exports = React.createClass({
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
     store.dispatch(ActionTools.addComment(comment));
-  },
-  console.log(POLL_INTERVAL);
-  setInterval(this.loadCommentsFromServer, POLL_INTERVAL);
 },
 render: function() {
   return (

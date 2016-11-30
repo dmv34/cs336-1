@@ -40,7 +40,7 @@ module.exports = React.createClass({
     },
     //  @author:  Loganvp
     handleDelete: function() {
-      store.dispatch(ActionTools.deleteComment(Number(this.props.params.id));
+      store.dispatch(ActionTools.deleteComment(Number(this.props.params.id)));
       this.context.router.push('/');
     },
 
