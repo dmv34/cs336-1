@@ -3,7 +3,7 @@ Members:
 Drew Vande Lune  
 Logan VanProyen  
 CS336  
----
+
 ##Vision Statement
 *Meta or Not* is a web service to help better the community of Star Wars X-Wing
 miniatures. Through the help of the community, we can show what the masses
