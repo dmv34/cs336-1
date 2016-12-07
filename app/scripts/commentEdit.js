@@ -5,7 +5,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
-import { store, ActionTools, StoreTools } from './flux';
+
 import { API_URL } from './global';
 
 module.exports = React.createClass({
@@ -13,13 +13,17 @@ module.exports = React.createClass({
         return {author: '', text: ''};
     },
     componentDidMount: function() {
-      let commentToEdit = StoreTools.findComment(this.props.params.id, store.getState().data);
-      this.setState({author: commentToEdit.author, text: commentToEdit.text});
+        this.loadData();
     },
     componentDidUpdate: function(prevProps) {
         if (this.props.params.id != prevProps.params.id) {
             this.loadData();
         }
+    },
+    loadData: function() {
+        $.ajax(API_URL + "/" + this.props.params.id) .done(function(comments) {
+            this.setState(comments[0]);
+        }.bind(this));
     },
     handleAuthorChange: function(e) {
         this.setState({author: e.target.value});
@@ -35,13 +39,33 @@ module.exports = React.createClass({
             author: this.state.author.trim(),
             text: this.state.text.trim()
         }
-        store.dispatch(ActionTools.editComment(Number(this.props.params.id), updatedComment));
-        this.context.router.push('/');
+        $.ajax({
+            url: API_URL + "/" + this.props.params.id,
+            dataType: 'json',
+            type: 'PUT',
+            contentType:'application/json',
+            data: JSON.stringify(updatedComment)
+        })
+            .done(function(comments){
+                this.context.router.push('/');
+            }.bind(this))
+            .fail(function(xhr, status, errorThrown) {
+                console.error(API_URL, status, errorThrown.toString());
+            }.bind(this));
     },
     //  @author:  Loganvp
     handleDelete: function() {
-      store.dispatch(ActionTools.deleteComment(Number(this.props.params.id)));
-      this.context.router.push('/');
+        $.ajax({
+            url: API_URL + "/" + this.props.params.id,
+            type: 'DELETE',
+            contentType:'application/json'
+        })
+            .done(function(comments){
+                this.context.router.push('/');
+            }.bind(this))
+            .fail(function(xhr, status, errorThrown) {
+                console.error(API_URL, status, errorThrown.toString());
+            }.bind(this));
     },
 
     render: function() {

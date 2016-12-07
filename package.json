@@ -1,9 +1,9 @@
 {
   "name": "server",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "license": "see LICENSE file",
-  "description": "Code from the React tutorial.",
+  "description": "This is for Drew & Logan's final project.",
   "main": "server.js",
   "scripts": {
     "build": "webpack --progress",
@@ -29,7 +29,6 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-router": "^3.0.0",
-    "redux": "^3.6.0",
     "remarkable": "^1.7.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
@@ -39,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/reactjs/react-tutorial.git"
+    "url": "https://github.com/Loganvp/cs336/tree/master/Project"
   },
   "keywords": [
     "react",
@@ -47,11 +46,8 @@
     "comment",
     "example"
   ],
-  "author": "petehunt",
-  "bugs": {
-    "url": "https://github.com/reactjs/react-tutorial/issues"
-  },
-  "homepage": "https://github.com/reactjs/react-tutorial",
+  "author": "Loganvp and DrewVL",
+  "homepage": "https://github.com/Loganvp/cs336/tree/master/Project",
   "engines": {
     "node": "0.12.x"
   }
