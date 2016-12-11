@@ -5,7 +5,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
-
 import { API_URL } from './global';
 
 module.exports = React.createClass({
@@ -21,8 +20,8 @@ module.exports = React.createClass({
         }
     },
     loadData: function() {
-        $.ajax(API_URL + "/" + this.props.params.id) .done(function(comments) {
-            this.setState(comments[0]);
+        $.ajax(API_URL + "/" + this.props.params.id) .done(function(squadronItems) {
+            this.setState(squadronItems[0]);
         }.bind(this));
     },
     handleAuthorChange: function(e) {
@@ -35,7 +34,7 @@ module.exports = React.createClass({
         router: React.PropTypes.object
     },
     handleUpdate: function() {
-        var updatedComment = {
+        var updatedSquadronItem = {
             author: this.state.author.trim(),
             text: this.state.text.trim()
         }
@@ -44,9 +43,9 @@ module.exports = React.createClass({
             dataType: 'json',
             type: 'PUT',
             contentType:'application/json',
-            data: JSON.stringify(updatedComment)
+            data: JSON.stringify(updatedSquadronItem)
         })
-            .done(function(comments){
+            .done(function(squadronItems){
                 this.context.router.push('/');
             }.bind(this))
             .fail(function(xhr, status, errorThrown) {
@@ -60,7 +59,7 @@ module.exports = React.createClass({
             type: 'DELETE',
             contentType:'application/json'
         })
-            .done(function(comments){
+            .done(function(squadronItems){
                 this.context.router.push('/');
             }.bind(this))
             .fail(function(xhr, status, errorThrown) {
@@ -71,8 +70,8 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                <form className="commentForm">
-                    <h1>Comment Edit - {this.state.id}</h1>
+                <form className="squadronForm">
+                    <h1>SquadronItem Edit - {this.state.id}</h1>
                     <input
                         type="text"
                         value={this.state.author}

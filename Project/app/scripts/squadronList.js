@@ -4,21 +4,21 @@
 import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
-import Comment from './comment';
+import SquadronItem from './squadronItem';
 
 //Made module.exports for all .js files
 module.exports = React.createClass({
     render: function() {
-        var commentNodes = this.props.data.map(function(comment) {
+        var squadronItemNodes = this.props.data.map(function(squadronItem) {
             return (
-                <Comment id={comment.id} author={comment.author} key={comment.id}>
+                <squadronItem id={squadronItem.id} author={squadronItem.author} key={squadronItem.id}>
                     {comment.text}
-                </Comment>
+                </squadronItem>
             );
         });
         return (
-            <div className="commentList">
-                {commentNodes}
+            <div className="squadronList">
+                {squadronItemNodes}
             </div>
         );
     }

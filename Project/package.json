@@ -8,8 +8,8 @@
   "scripts": {
     "build": "webpack --progress",
     "dev": "node server.js & webpack-dev-server --progress --history-api-fallback",
-    "start": "node server.js",
-    "install": "webpack --progress --config ./webpack.production.config.js"
+    "start": "nodemon server.js",
+    "install": "webpack --progress --config ./webpack.production.config.js --watch"
   },
   "dependencies": {
     "autoprefixer": "^6.5.3",
@@ -34,6 +34,7 @@
     "webpack": "^1.13.3"
   },
   "devDependencies": {
+    "nodemon": "^1.11.0",
     "webpack-dev-server": "^1.16.2"
   },
   "repository": {
