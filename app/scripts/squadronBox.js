@@ -3,8 +3,8 @@
 //external/local imports required by this module…
 import React from 'react';
 import $ from 'jquery';
-import CommentList from './commentList';
-import CommentForm from './commentForm';
+import SquadronList from './squadronList';
+import SquadronForm from './squadronForm';
 import { API_URL, POLL_INTERVAL } from './global';
 
 
@@ -26,22 +26,22 @@ module.exports = React.createClass({
              console.error(API_URL, status, errorThrown.toString());
          }.bind(this));
     },
-    handleCommentSubmit: function(comment) {
-        var comments = this.state.data;
+    handleCommentSubmit: function(squadronItem) {
+        var squadronItems = this.state.data;
         comment.id = Date.now();
-        var newComments = comments.concat([comment]);
-        this.setState({data: newComments});
+        var newSquadronItem = squadronItem.concat([squadronItems]);
+        this.setState({data: newSquadronItem});
         $.ajax({
             url: API_URL,
             dataType: 'json',
             type: 'POST',
-            data: comment,
+            data: squadronItem,
         })
          .done(function(result){
              this.setState({data: result});
          }.bind(this))
          .fail(function(xhr, status, errorThrown) {
-             this.setState({data: comments});
+             this.setState({data: squadronItems});
              console.error(API_URL, status, errorThrown.toString());
          }.bind(this));
     },
@@ -52,11 +52,19 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <div className="commentBox">
-                <h1>Comments</h1>
-                <CommentList data={this.state.data} />
-                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-            </div>
+          <div className="SquadronBox">
+          <header>Meta or Not</header>
+          <div id='main'>
+          <app> 
+              <SquadronList data={this.state.data} />
+              <SquadronForm onCommentSubmit={this.handleCommentSubmit} />
+          </app>
+          <nav>
+            <a href="https://www.youtube.com/watch?v=WNIPqafd4As">Good work</a>
+          </nav>
+        </div>
+        <footer>By Logan and Drew</footer>
+        </div>
         );
     }
 });

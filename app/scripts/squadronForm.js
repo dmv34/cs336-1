@@ -1,5 +1,7 @@
 //This was split off because of Exercise 9.2
 
+//Sliders will be difficult https://github.com/whoisandie/react-rangeslider
+
 //external/local imports required by this module…
 import React from 'react';
 import $ from 'jquery';
@@ -27,11 +29,11 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <form className="commentForm" onSubmit={this.handleSubmit}>
-                <input className="ui-widget ui-corner-all" type="text" placeholder="name..."
+            <form className="SquadronForm" onSubmit={this.handleSubmit}>
+                <input className="ui-widget ui-corner-all" type="number" placeholder='50'
                        value={this.state.author} onChange={this.handleAuthorChange}
                 />
-                <input className="ui-widget ui-corner-all" type="text" placeholder="comment..."
+                <input className="ui-widget ui-corner-all" type="number" placeholder='50'
                        value={this.state.text} onChange={this.handleTextChange}
                 />
                 <input className="ui-button ui-widget ui-corner-all" type="submit" value="Post" />

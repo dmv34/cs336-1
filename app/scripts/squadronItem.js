@@ -13,7 +13,7 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <div className="comment">
+            <div className="squadronItem">
                 <h2 className="commentAuthor" >
                     {this.props.author}
                 </h2>

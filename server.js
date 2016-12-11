@@ -15,7 +15,6 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 
 //database variables
 var MongoClient = require('mongodb').MongoClient;
@@ -25,7 +24,7 @@ var USERNAME = 'cs336';
 //change the password for the db
 var PASSWORD = 'PASSWORD';
 //connects to database
-MongoClient.connect('mongodb://'+USERNAME+':'+PASSWORD+'@ds023593.mlab.com:23593/cs336', function (err, db) {
+MongoClient.connect('mongodb://'+USERNAME+':'+PASSWORD+'@ds063406.mlab.com:63406/cs336project', function (err, db) {
   if (err) throw err;
 
   dbConnection = db;
@@ -45,7 +44,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/comments', function(req, res) {
-  dbConnection.collection("comments").find({}).toArray(function(err, docs) {
+  dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
     if (err) throw err;
     res.json(docs);
   });
@@ -58,13 +57,13 @@ app.post('/api/comments', function(req, res) {
     text: req.body.text,
   };
   //add comment to the database.
-  dbConnection.collection('comments').insert(newComment);
+  dbConnection.collection('squadrons').insert(newComment);
 });
 
 //  Pulled from here: https://cs.calvin.edu/courses/cs/336/kvlinden/12router/code/routes.js
 //---------START------------
 app.get('/api/comments/:id', function(req, res) {
-    dbConnection.collection("comments").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
+    dbConnection.collection("squadrons").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
     });
@@ -73,12 +72,12 @@ app.get('/api/comments/:id', function(req, res) {
 app.put('/api/comments/:id', function(req, res) {
     var updateId = Number(req.params.id);
     var update = req.body;
-    dbConnection.collection('comments').updateOne(
+    dbConnection.collection('squadrons').updateOne(
         { id: updateId },
         { $set: update },
         function(err, result) {
             if (err) throw err;
-            dbConnection.collection("comments").find({}).toArray(function(err, docs) {
+            dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
                 if (err) throw err;
                 res.json(docs);
             });
@@ -86,11 +85,11 @@ app.put('/api/comments/:id', function(req, res) {
 });
 
 app.delete('/api/comments/:id', function(req, res) {
-    dbConnection.collection("comments").deleteOne(
+    dbConnection.collection("squadrons").deleteOne(
         {'id': Number(req.params.id)},
         function(err, result) {
             if (err) throw err;
-            dbConnection.collection("comments").find({}).toArray(function(err, docs) {
+            dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
                 if (err) throw err;
                 res.json(docs);
             });
