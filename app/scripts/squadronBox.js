@@ -54,8 +54,8 @@ module.exports = React.createClass({
         return (
           <div className="SquadronBox">
           <header>Meta or Not</header>
-          <div id='main'>
-          <app> 
+          <div id='main'> 
+          <app>
               <SquadronList data={this.state.data} />
               <SquadronForm onCommentSubmit={this.handleCommentSubmit} />
           </app>

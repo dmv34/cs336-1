@@ -90,11 +90,13 @@ footer {
   display: block;
   font-size: 80%;
   font-style: italic;
+  color:#fafafa;
   padding: 5px;
   min-height: 10px;
   min-height: 15px;
   border: 8px;
-  background: #feb;
+  background-color:#3882C7;
+  border:5px solid #fafafa;
 }
 header {
   background-color:#3882C7;
