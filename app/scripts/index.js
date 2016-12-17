@@ -1,17 +1,18 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SquadronBox from './squadronBox';
-import SquadronEdit from './squadronEdit';
-import '../css/base.css';
+import style from '../css/style.css';
 import { Router, Route, Redirect, browserHistory } from 'react-router';
+
+import mainWindow from './mainWindow';
+import resultsBox from './resultsBox';
+import votingBox from './votingBox';
+
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="/" component={SquadronBox}></Route>
-    <Route path="/:id" component={SquadronEdit}></Route>
+    <Route path="/" component={votingBox}/>
+    <Route path="/voting" compontent={votingBox}/>
+    <Route path="/results" component={resultsBox}/>
   </Router>
-  ),document.getElementById('content')
-);
-
-  
+), document.getElementById('content'));

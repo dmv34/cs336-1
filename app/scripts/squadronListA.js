@@ -2,14 +2,17 @@
 
 //external/local imports required by this module…
 import React from 'react';
+import $ from 'jquery';
 import Remarkable from 'remarkable';
-import { Link } from 'react-router';
+import SquadronItem from './squadronItem';
+import style from '../css/style.css';
 
+//Made module.exports for all .js files
 module.exports = React.createClass({
-    render: function() {
+    render:function() {
         return (
-            <div className="squadronItem">
-            <p>Word</p>
+            <div className={style.squadronListB}>
+                <p>Test</p>
             </div>
         );
     }
