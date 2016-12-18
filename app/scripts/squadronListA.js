@@ -4,15 +4,22 @@
 import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
-import SquadronItem from './squadronItem';
+import Squadron from './squadron';
 import style from '../css/style.css';
 
 //Made module.exports for all .js files
 module.exports = React.createClass({
     render:function() {
+      var SquadronNodes = this.props.data.map(function(squadron) {
         return (
-            <div className={style.squadronListB}>
-                <p>Test</p>
+          <Squadron squadron={squadron.squadron} faction={squadron.faction}
+          points = {squadron.points}  key={squadron.squadron}>
+          </Squadron>
+        );
+      });
+        return (
+            <div className={style.squadListA}>
+                {SquadronNodes}
             </div>
         );
     }

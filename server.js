@@ -24,9 +24,9 @@ var USERNAME = 'cs336';
 //change the password for the db
 var PASSWORD = 'PASSWORD';
 //connects to database
+var APP_PATH = path.join(__dirname, 'dist');
 MongoClient.connect('mongodb://'+USERNAME+':'+PASSWORD+'@ds063406.mlab.com:63406/cs336project', function (err, db) {
   if (err) throw err;
-
   dbConnection = db;
 })
 
@@ -43,59 +43,39 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/api/comments', function(req, res) {
-  dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
+app.get('/api/squadrons', function(req, res) {
+  var randomNumber = Math.floor(Math.random() * 10) + 1;
+  var randomNumber2 = Math.floor(Math.random() * 10) + 1;
+  while(randomNumber == randomNumber2){
+    randomNumber2 = Math.floor(Math.random() * 10) + 1;
+  }
+  dbConnection.collection("squadrons").find({$or: [ {"squadron": Number(randomNumber)}, {"squadron": Number(randomNumber2)}]}).toArray(function(err, docs) {
     if (err) throw err;
     res.json(docs);
   });
 });
 
-app.post('/api/comments', function(req, res) {
-  var newComment = {
-    id: Date.now(),
-    author: req.body.author,
-    text: req.body.text,
-  };
-  //add comment to the database.
-  dbConnection.collection('squadrons').insert(newComment);
+app.get('/api/matchups', function(req, res){
+  dbConnection.collection("matchups").find({}).toArray(function(err, data){
+    if (err) throw err;
+    res.json(data);
+  });
 });
 
-//  Pulled from here: https://cs.calvin.edu/courses/cs/336/kvlinden/12router/code/routes.js
-//---------START------------
-app.get('/api/comments/:id', function(req, res) {
-    dbConnection.collection("squadrons").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
-        if (err) throw err;
-        res.json(docs);
-    });
+app.post('/api/matchups', function(req, res){
+  var matchup1={
+    squadron1: SquadronA; //placeholder
+    squadron2: SquadronB; //placeholder
+    percentage: req.body.valueone;
+  }
+  var matchup2 = {
+    squadron1: SquadronB; //placeholder
+    squadron2: SquadronA; //placeholder
+    percentage: req.body.valuetwo;
+  }
+  dbConnection.collection("matchups").insert(matchup1);
+  dbConnection.collection("matchups").insert(matchup2);
 });
-
-app.put('/api/comments/:id', function(req, res) {
-    var updateId = Number(req.params.id);
-    var update = req.body;
-    dbConnection.collection('squadrons').updateOne(
-        { id: updateId },
-        { $set: update },
-        function(err, result) {
-            if (err) throw err;
-            dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
-
-app.delete('/api/comments/:id', function(req, res) {
-    dbConnection.collection("squadrons").deleteOne(
-        {'id': Number(req.params.id)},
-        function(err, result) {
-            if (err) throw err;
-            dbConnection.collection("squadrons").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
-//---------END------------
 
 app.get('*', function (request, response){
   response.sendFile(path.resolve(APP_PATH, 'index.tmpl.html'))
