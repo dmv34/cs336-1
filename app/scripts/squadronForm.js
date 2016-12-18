@@ -5,6 +5,8 @@
 //external/local imports required by this module…
 import React from 'react';
 import $ from 'jquery';
+import style from '../css/style.css';
+
 
 //Made module.exports for all .js files
 module.exports = React.createClass({

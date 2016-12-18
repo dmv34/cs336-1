@@ -2,11 +2,32 @@ body {
   font: 24px Helvetica;
   background: #999;
 }
+header {
+  display: block;
+  font-size: 50px;
+  line-height: 100px;
+  padding: 5px;
+  min-height: 100px;
+  border: 1px solid #000;
+  background: #feb;
+}
+footer {
+  display: block;
+  font-size: 12px;
+  padding: 5px;
+  min-height: 100px;
+  border: 1px solid #000;
+  background: #feb;
+}
 .mainWindow {
   background-color: #d9d9d9;
   border-radius: 30px;
   width: 90%;
   margin: auto;
+}
+.initialPage{
+  display: flex;
+  flex-flow: row wrap;
 }
 .votingBox{
   padding: 5px;
@@ -16,6 +37,12 @@ body {
   order: 2;
   display: flex;
   flex-flow: row;
+}
+.resultsBox{
+  padding: 15px;
+  margin: 10px 0 0 0;
+  flex: 0 2 22%;
+  order: 1;
 }
 
 .squadListA{
@@ -35,33 +62,25 @@ body {
 }
 
 
-.navBar {
+/*.navBar {
   text-align: right;
   padding: 5px;
   border: 1px solid #000;
   background: #ccf;
   flex: 1 6 10%;
   order: 1;
+}*/
+
+.navBar {
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  width: 95%;
+  margin: auto;
+  padding-top: 10px;
 }
 
 
-header {
-  display: block;
-  font-size: 50px;
-  line-height: 100px;
-  padding: 5px;
-  min-height: 100px;
-  border: 1px solid #000;
-  background: #feb;
-}
-footer {
-  display: block;
-  font-size: 12px;
-  padding: 5px;
-  min-height: 100px;
-  border: 1px solid #000;
-  background: #feb;
-}
 /* Too narrow to support three columns */
 @media all and (max-width: 640px) {
   .mainWindow,
