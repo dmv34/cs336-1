@@ -1,6 +1,6 @@
 First table of avalible squadrons to pull from.
 
-[{"squadron": (name/id of squadron), "points": (int number out of 100),"faction": (one of the three playable factions), "pilots": [{"name": (of pilot), "ship": (name of ship),"upgrades": [ (list of all upgrade cards on ship) ] }, (remaining pilots in squadron)] }, (many more squadrons)]
+[{"squadron": (name/id of squadron), "points": (int number out of 100),"faction": (one of the three playable factions), "pilots": [{"name": (Pilot name "with" card upgrades) }, (remaining pilots in squadron)] }, (many more squadrons)]
 
 Second table of squadron matchups.
 
